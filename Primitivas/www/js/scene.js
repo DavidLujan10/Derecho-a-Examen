@@ -11,19 +11,25 @@
         renderer.shadowMap.soft = true;//LA SOMBRA MAS SUAVE CON RESPECTO LA LUZ QUE ESTOY PROYECTANDO
         renderer.shadowMap.type = THREE.PCFShadowMap;//TIPO DE SOMBRA QUE VAMOS A USAR
 
-        camera.position.z = 20;//PROFUNDIDAD CON LA QUE SE VIZUALISARA LA CAMARA
+        camera.position.z = 35;//PROFUNDIDAD CON LA QUE SE VIZUALISARA LA CAMARA
         camera.position.y = 5;//ALTURA DE LA CAMARA
         //camera.position.x = 0;//LARGO DE LA CAMARA    
 
     
         //la plataforma gris 
-        let planeGeometry = new THREE.PlaneGeometry(200,1500);// creacion del plano y su tamano 
+        let planeGeometry = new THREE.PlaneGeometry(200,900);// creacion del plano y su tamano 
+        let planeGeometry2 = new THREE.PlaneGeometry(200,900);// creacion del plano y su tamano 
         planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));// matrix de 4 ejes
+        planeGeometry2.applyMatrix(new THREE.Matrix4().makeRotationZ(-Math.PI/2));// matrix de 4 ejes
         //  se rota y se refresque constantemente 
         let groundMaterial = new THREE.MeshPhongMaterial({// genera el material en el mesh
             color: 0xffffff
         });
+        let groundMaterial2 = new THREE.MeshPhongMaterial({// genera el material en el mesh
+            color: 0xffffff
+        });
         let plane = new THREE.Mesh(planeGeometry, groundMaterial);// crear la geometria del plano
+        let plane2 = new THREE.Mesh(planeGeometry2, groundMaterial2);// crear la geometria del plano
         plane.receiveShadow  = true;//QUIEN VA A RECBIR LA SOMBRA
         let loader = new THREE.TextureLoader();
 
@@ -50,13 +56,16 @@
         let piramide = new THREE.Mesh(piramideGeometria, materialPiramide);//GENERAMOS UNA REJILLA (mesh) DONDE GUARDAMOS LAS PROPIEDADES DE LA GEOMETRIA Y DEL MATERIAL DE LA FIGURA 
         piramide.position.x = 20;
         piramide.position.y = 8;
+        piramide.position.z = 10;
 
         let cubo = new THREE.Mesh(cuboGeometria, materialCubo );
         cubo.position.x = -20;
         cubo.position.y = 5;
+        cubo.position.z = 10;
  
         let dona = new THREE.Mesh(donaGeometria, materialDona );
         dona.position.y = 6;
+        dona.position.z = 10;
         
     
         let puntoLuz = new THREE.PointLight(0x404040);//CREAMOS UNA LUZ DE TIPO PUNTO
@@ -72,9 +81,10 @@
         scene.add(new THREE.AmbientLight(0x404040));//AGREGAMOS OTRA PEQUEÑA LUZ (luz de ambiente)
         scene.add(puntoLuz);//AGREGAMOS EL PUNTO LUZ A LA ESCENA
         scene.add(plane);
+        scene.add(plane2);
             
         
-        let controls = new THREE.OrbitControls(camera, renderer.domElement);//ESTO ES PARA PODER MOVER LA CAMARA POR LA ESCENA
+        //let controls = new THREE.OrbitControls(camera, renderer.domElement);//ESTO ES PARA PODER MOVER LA CAMARA POR LA ESCENA
     
     
         function loop(){//CICLA CONSTANTEMENTE LOS FRAMES QUE VAS A GENERAR
