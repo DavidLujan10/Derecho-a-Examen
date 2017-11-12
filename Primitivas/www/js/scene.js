@@ -9,10 +9,6 @@
     document.body.appendChild(renderer.domElement);
 
     var controls = new THREE.TrackballControls(camera);
-    controls.maxPolarAngle = Math.PI * 0.5;
-    controls.minDistance = 10;
-    controls.maxDistance = 75;
-    controls.target.set( 0, 2.5, 0 );
 
     renderer.shadowMap.enabled = true;//DAR DE ALTA EL SERVICIO DE LAS SOBRAS PARA PODER USARLAS
     renderer.shadowMap.soft = true;//LA SOMBRA MAS SUAVE CON RESPECTO LA LUZ QUE ESTOY PROYECTANDO
@@ -66,7 +62,6 @@
         });
         return groundMaterialFormas;
     }
-
 
     function loop() {
         controls.update(); //Actualizacion de los controles de camara
