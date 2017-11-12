@@ -13,7 +13,7 @@
     renderer.shadowMap.enabled = true;//DAR DE ALTA EL SERVICIO DE LAS SOBRAS PARA PODER USARLAS
     renderer.shadowMap.soft = true;//LA SOMBRA MAS SUAVE CON RESPECTO LA LUZ QUE ESTOY PROYECTANDO
     renderer.shadowMap.type = THREE.PCFShadowMap;//TIPO DE SOMBRA QUE VAMOS A USAR
-
+    
     camera.position.z = 35; //PROFUNDIDAD CON LA QUE SE VIZUALISARA LA CAMARA
     camera.position.y = 5; //ALTURA DE LA CAMARA
 
@@ -35,7 +35,7 @@
     piramide.castShadow = true;
     cubo.castShadow = true;
     dona.castShadow = true;
-    plane.receiveShadow = true;
+    plane.receiveShadow = true; //Le daremos al plane la propiedad de recibir la sombra
 
     //Posicionamiento de las formas
     piramide.position.x = 20;
@@ -44,17 +44,21 @@
     cubo.position.y = 5;
     dona.position.y = 6;
 
+    //Luz
     let puntoLuz = new THREE.PointLight(0xdfebff, .9);
-    puntoLuz.position.set(50, 80, 20);
-    puntoLuz.castShadow = true;
+    let luzAmbiente = new THREE.AmbientLight('#DFFBFF'); //Luz de ambiente
+    puntoLuz.position.set(50, 80, 20); //Definimos una posición para la luz
+    puntoLuz.castShadow = true; //Agregamos true en castShadow por que es el que transmitirá la sombra
 
-    scene.add(new THREE.AmbientLight('#DFFBFF'));
-
+    //Objetos a la escena
     scene.add(piramide);
     scene.add(cubo);
     scene.add(dona);
     scene.add(plane);
+
+    //Luz a la escena
     scene.add(puntoLuz);
+    scene.add(luzAmbiente);
 
     function color() { //Funcion para el cambio de material con las formas
         var groundMaterialFormas = new THREE.MeshPhongMaterial({
