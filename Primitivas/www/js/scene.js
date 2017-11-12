@@ -18,7 +18,7 @@
     camera.position.y = 5; //ALTURA DE LA CAMARA
 
     //Formas
-    var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false);
+    var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false); // le modificamos a la figura para que tenga el aspecto a piramide
     var cuboGeometria = new THREE.BoxGeometry(2, 2, 2, 2);
     var donaGeometria = new THREE.TorusGeometry(3, 2, 16, 100);
     let planeGeometry = new THREE.PlaneGeometry(200, 900); //Creacion del plano y su tamano 
@@ -27,7 +27,7 @@
     //Propiedades de las formas
     var piramide = new THREE.Mesh(piramideGeometria, color());
     var cubo = new THREE.Mesh(cuboGeometria, color());
-    var dona = new THREE.Mesh(donaGeometria, color());
+    var dona = new THREE.Mesh(donaGeometria, color()); // puse esta figura para que se apreciara nas como una dona
     let groundMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
     let plane = new THREE.Mesh(planeGeometry, groundMaterial);
 
