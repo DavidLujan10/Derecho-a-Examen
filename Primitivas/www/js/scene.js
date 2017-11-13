@@ -13,14 +13,14 @@
     renderer.shadowMap.enabled = true;//DAR DE ALTA EL SERVICIO DE LAS SOBRAS PARA PODER USARLAS
     renderer.shadowMap.soft = true;//LA SOMBRA MAS SUAVE CON RESPECTO LA LUZ QUE ESTOY PROYECTANDO
     renderer.shadowMap.type = THREE.PCFShadowMap;//TIPO DE SOMBRA QUE VAMOS A USAR
-    
+
     camera.position.z = 35; //PROFUNDIDAD CON LA QUE SE VIZUALISARA LA CAMARA
     camera.position.y = 5; //ALTURA DE LA CAMARA
 
     //Formas
     var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false); // le modificamos a la figura para que tenga el aspecto a piramide
-    var cuboGeometria = new THREE.BoxGeometry(2, 2, 2, 2);
-    var donaGeometria = new THREE.TorusGeometry(3, 2, 16, 100);
+    var cuboGeometria = new THREE.BoxGeometry(6, 6, 6, 6);
+    var donaGeometria = new THREE.TorusGeometry(4, 2, 16, 100);
     let planeGeometry = new THREE.PlaneGeometry(200, 900); //Creacion del plano y su tamano 
     planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2)); //Matrix de 4 ejes
 
@@ -44,11 +44,16 @@
     cubo.position.y = 5;
     dona.position.y = 6;
 
+
     //Luz
     let puntoLuz = new THREE.PointLight(0xdfebff, .9);
     let luzAmbiente = new THREE.AmbientLight('#DFFBFF'); //Luz de ambiente
     puntoLuz.position.set(50, 80, 20); //Definimos una posición para la luz
     puntoLuz.castShadow = true; //Agregamos true en castShadow por que es el que transmitirá la sombra
+
+    raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
+    document.addEventListener('mousedown', onDocumentMouseDown, false);
 
     //Objetos a la escena
     scene.add(piramide);
@@ -67,6 +72,31 @@
         return groundMaterialFormas;
     }
 
+    function onDocumentMouseDown(event) {
+        event.preventDefault();
+        mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+        mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(scene.children);
+        if (intersects.length > 0) {
+            var intersect = intersects[0];
+            if (intersect.object.geometry.type == "ConeGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("piramide");
+            }
+            if (intersect.object.geometry.type == "BoxGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("Cubo");
+            }
+            if (intersect.object.geometry.type == "TorusGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("Dona");
+            }
+        }
+    }
     function loop() {
         controls.update(); //Actualizacion de los controles de camara
         requestAnimationFrame(loop);
