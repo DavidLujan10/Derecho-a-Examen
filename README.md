@@ -10,6 +10,7 @@ Características
 --------
 * Rotación de formas
 * Movimiento de cámara
+* Cambio de material
 
 Código
 ---------
@@ -93,4 +94,31 @@ dona = new THREE.Mesh(donaGeometria, color());
 dona.castShadow = true; //Se encargara de transmitir la sombra
 plane.receiveShadow = true; //Le daremos al plane la propiedad de recibir la sombra
 ```
+Para cambiarde textura a las primitivas al momento en que se preione una tecla(`onkeypress`) que sera toda nuestra funcion.
 
+```javascript
+document.body.onkeypress = function(){
+```
+
+Para cargar los diferentes materiales nos ayuda nuestra variable(`changeTexture`) donde si el residuo hara que se alternen las diferentes texturas.
+
+```javascript
+if(changeTexture % 2 == 0){// La funcion se inicializa que obtiene el mod para cambiar entre varias
+                                    //texturas
+            texture = new THREE.TextureLoader().load('img/Star.jpg');
+        }else{
+            texture = new THREE.TextureLoader().load('img/sun.jpg');
+        }
+```
+
+Se vuelve a cargar el material de las primitivas con las texturas que se desean y se vuelve a renderizar la camara y la scena.
+
+```javascript
+renderer.render(scene,camera);
+```
+
+La variable (`changeTexture`) se estara aunmentando en 1 para que exista esa alternancia
+
+```javascript
+changeTexture += 1;
+```
