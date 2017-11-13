@@ -94,6 +94,7 @@ dona = new THREE.Mesh(donaGeometria, color());
 dona.castShadow = true; //Se encargara de transmitir la sombra
 plane.receiveShadow = true; //Le daremos al plane la propiedad de recibir la sombra
 ```
+#### Texture ####
 Para cambiarde textura a las primitivas al momento en que se preione una tecla(`onkeypress`) que sera toda nuestra funcion.
 
 ```javascript
