@@ -60,7 +60,24 @@
     scene.add(cubo);
     scene.add(dona);
     scene.add(plane);
+    
+    //Cambiar de textura
+    let changeTexture = 0;
+    document.body.onkeypress = function(){ // Detecta si se preciona una tecla
+        if(changeTexture % 2 == 0){// La funcion se inicializa que obtiene el mod para cambiar entre varias
+                                    //texturas
+            texture = new THREE.TextureLoader().load('img/Star.jpg');
+        }else{
+            texture = new THREE.TextureLoader().load('img/sun.jpg');
+        }
+        //Los materiales se alternan al precionar una tecla y se vuelve a cargar las primitivas
+        dona.material = new THREE.MeshBasicMaterial({map:texture});
+        piramide.material = new THREE.MeshBasicMaterial({map:texture});
+        cubo.material = new THREE.MeshBasicMaterial({map:texture});
+        renderer.render(scene,camera);
 
+        changeTexture += 1; // Se aumenta en uno para que se alterne.
+    }
     //Luz a la escena
     scene.add(puntoLuz);
     scene.add(luzAmbiente);
