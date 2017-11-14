@@ -53,6 +53,50 @@ function loop() {
 }
 loop();
 ```
+La función `onDocumentMouseDown` la utilizamos cuando presionamos el mouse sobre una de las primitivas.
+
+El raycaster hace una selección con el mouse
+```javascript 
+raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
+    document.addEventListener('mousedown', onDocumentMouseDown, false);
+```    
+
+Y actualizamos el raycaster con la posicion del mouse y de la camara
+```javascript 
+ raycaster.setFromCamera(mouse, camera);
+ ```  
+
+La variable intersects calcula los objetos que se cruzan con el raycaster, donde si el arreglo es mayor a 0 y si encuentra el tipo de objeto segun su geometria, toma el material y lo cambia utilizando la funcion de material
+En mouse.x y mouse.y se calcula la posición del mouse en las coordenadas del recurso normalizado
+```javascript 
+function onDocumentMouseDown(event) {
+        event.preventDefault();
+        mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+        mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        var intersects = raycaster.intersectObjects(scene.children);
+        if (intersects.length > 0) {
+            var intersect = intersects[0];
+            if (intersect.object.geometry.type == "ConeGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("piramide");
+            }
+            if (intersect.object.geometry.type == "BoxGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("Cubo");
+            }
+            if (intersect.object.geometry.type == "TorusGeometry") {
+                intersect.object.material = color();
+                //intersect.object.material.color.set(Math.random() * 0xffff00);
+                console.log("Dona");
+            }
+        }
+    }
+```
+
 #### Light and Shadow ####
 Para el manejo de sombras utilizamos luz `PointLight` esta es la encargada de mostrar luz y agregar las sombras. Para que nuestra escena pueda realizar la acción de sombreado tenemos que definirla en el render para poder realizar el sombreado.
 ```javascript
