@@ -167,3 +167,37 @@ La variable (`changeTexture`) se estara aunmentando en 1 para que exista esa alt
 ```javascript
 changeTexture += 1;
 ```
+aqui le agregamos las formas y propiedades de las figuras con su respectibo material y la geometria (tamanos y propiedades) en el caso del plano fue similar teniamos que agregarle lo de los 4 matrixes para que igual se mostrara abajo y atras.
+
+```javascript
+   //Formas
+        var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false); // le modificamos a la figura para que tenga el aspecto a piramide
+        var cuboGeometria = new THREE.BoxGeometry(6, 6, 6, 6); 
+        var donaGeometria = new THREE.TorusGeometry(4, 2, 16, 100);
+        let planeGeometry = new THREE.PlaneGeometry(200, 900); //Creacion del plano y su tamano 
+        planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2)); //Matrix de 4 ejes
+...
+
+```
+ despues lo mandamos  a llamar con el mesh respectivo y dandole su color, al igual con su material y geometria.
+ 
+```javascript
+        //Propiedades de las formas
+        var piramide = new THREE.Mesh(piramideGeometria, color());
+        var cubo = new THREE.Mesh(cuboGeometria, color());
+        var dona = new THREE.Mesh(donaGeometria, color()); // puse esta figura para que se apreciara nas como una dona
+        let groundMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        let plane = new THREE.Mesh(planeGeometry, groundMaterial); // geometria y material del plano
+...
+
+```
+al final le agregamos que se muestre en la scena  al igual que las demas figuras.
+        
+    
+```javascript
+       //Objetos a la escena
+        scene.add(piramide);
+        scene.add(cubo);
+        scene.add(dona);
+        scene.add(plane); //que se muestre el plano en la scena
+...
