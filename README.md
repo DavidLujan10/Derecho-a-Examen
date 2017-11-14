@@ -13,9 +13,17 @@ Características
 * Movimiento de cámara
 * Cambio de material
 
+Funcionamiento 
+--------
+* Texturas: Para cambiar las texturas solo basta con precionar cualquier tecla.
+
+* Movimiento de camar: Para el movimiento de camara basta con arrastrar el mouse.
+
+* Cambio de materia: Pasa el cambio de material solo basta con dar click en cada una de las figuras.
+
 Código
 ---------
-#### Funciones usadas ####
+### Funciones usadas ###
 
 | Funciones   | Descripción |
 | --------- |:----------- |
@@ -54,6 +62,40 @@ function loop() {
 }
 loop();
 ```
+### Shapes ###
+aqui le agregamos las formas y propiedades de las figuras con su respectibo material y la geometria (tamanos y propiedades) en el caso del plano fue similar teniamos que agregarle lo de los 4 matrixes para que igual se mostrara abajo y atras.
+
+```javascript
+   //Formas
+        var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false); // le modificamos a la figura para que tenga el aspecto a piramide
+        var cuboGeometria = new THREE.BoxGeometry(6, 6, 6, 6); 
+        var donaGeometria = new THREE.TorusGeometry(4, 2, 16, 100);
+        let planeGeometry = new THREE.PlaneGeometry(200, 900); //Creacion del plano y su tamano 
+        planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2)); //Matrix de 4 ejes
+...
+
+```
+ despues lo mandamos  a llamar con el mesh respectivo y dandole su color, al igual con su material y geometria.
+ 
+```javascript
+        //Propiedades de las formas
+        var piramide = new THREE.Mesh(piramideGeometria, color());
+        var cubo = new THREE.Mesh(cuboGeometria, color());
+        var dona = new THREE.Mesh(donaGeometria, color()); // puse esta figura para que se apreciara nas como una dona
+        let groundMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        let plane = new THREE.Mesh(planeGeometry, groundMaterial); // geometria y material del plano
+```
+al final le agregamos que se muestre en la scena  al igual que las demas figuras.
+        
+    
+```javascript
+       //Objetos a la escena
+        scene.add(piramide);
+        scene.add(cubo);
+        scene.add(dona);
+        scene.add(plane); //que se muestre el plano en la scena
+```
+### Cambio de colores mouseClick ###
 La función `onDocumentMouseDown` la utilizamos cuando presionamos el mouse sobre una de las primitivas.
 
 El raycaster hace una selección con el mouse
@@ -67,6 +109,8 @@ Y actualizamos el raycaster con la posicion del mouse y de la camara
 ```javascript 
  raycaster.setFromCamera(mouse, camera);
  ```  
+ 
+ 
 
 La variable intersects calcula los objetos que se cruzan con el raycaster, donde si el arreglo es mayor a 0 y si encuentra el tipo de objeto segun su geometria, toma el material y lo cambia utilizando la funcion de material
 En mouse.x y mouse.y se calcula la posición del mouse en las coordenadas del recurso normalizado
@@ -98,7 +142,7 @@ function onDocumentMouseDown(event) {
     }
 ```
 
-#### Light and Shadow ####
+### Light and Shadow ###
 Para el manejo de sombras utilizamos luz `PointLight` esta es la encargada de mostrar luz y agregar las sombras. Para que nuestra escena pueda realizar la acción de sombreado tenemos que definirla en el render para poder realizar el sombreado.
 ```javascript
     renderer.shadowMap.enabled = true;//DAR DE ALTA EL SERVICIO DE LAS SOBRAS PARA PODER USARLAS
@@ -139,7 +183,7 @@ dona = new THREE.Mesh(donaGeometria, color());
 dona.castShadow = true; //Se encargara de transmitir la sombra
 plane.receiveShadow = true; //Le daremos al plane la propiedad de recibir la sombra
 ```
-#### Texture ####
+### Texture ###
 Para cambiarde textura a las primitivas al momento en que se preione una tecla(`onkeypress`) que sera toda nuestra funcion.
 
 ```javascript
@@ -168,37 +212,3 @@ La variable (`changeTexture`) se estara aunmentando en 1 para que exista esa alt
 ```javascript
 changeTexture += 1;
 ```
-aqui le agregamos las formas y propiedades de las figuras con su respectibo material y la geometria (tamanos y propiedades) en el caso del plano fue similar teniamos que agregarle lo de los 4 matrixes para que igual se mostrara abajo y atras.
-
-```javascript
-   //Formas
-        var piramideGeometria = new THREE.ConeGeometry(5, 10, 4, 1, false); // le modificamos a la figura para que tenga el aspecto a piramide
-        var cuboGeometria = new THREE.BoxGeometry(6, 6, 6, 6); 
-        var donaGeometria = new THREE.TorusGeometry(4, 2, 16, 100);
-        let planeGeometry = new THREE.PlaneGeometry(200, 900); //Creacion del plano y su tamano 
-        planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2)); //Matrix de 4 ejes
-...
-
-```
- despues lo mandamos  a llamar con el mesh respectivo y dandole su color, al igual con su material y geometria.
- 
-```javascript
-        //Propiedades de las formas
-        var piramide = new THREE.Mesh(piramideGeometria, color());
-        var cubo = new THREE.Mesh(cuboGeometria, color());
-        var dona = new THREE.Mesh(donaGeometria, color()); // puse esta figura para que se apreciara nas como una dona
-        let groundMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
-        let plane = new THREE.Mesh(planeGeometry, groundMaterial); // geometria y material del plano
-...
-
-```
-al final le agregamos que se muestre en la scena  al igual que las demas figuras.
-        
-    
-```javascript
-       //Objetos a la escena
-        scene.add(piramide);
-        scene.add(cubo);
-        scene.add(dona);
-        scene.add(plane); //que se muestre el plano en la scena
-...
