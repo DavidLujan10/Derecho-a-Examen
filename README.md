@@ -5,6 +5,7 @@ Derecho a examen
 * Monica Fernanda Ortiz Quezada
 * Luis Angel Alcudia Juarez
 * Jose David Lujan Gallegos
+* Isis D. Hernandez Martinez
 
 Características
 --------
